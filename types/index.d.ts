@@ -8,6 +8,14 @@ declare module 'opening_hours' {
     getState(date?: Date): boolean
     getUnknown(date?: Date): boolean
     getStateString(
+      date: Date | undefined,
+      past: true
+    ): 'open' | 'unknown' | 'closed'
+    getStateString(
+      date?: Date,
+      past?: false
+    ): 'open' | 'unknown' | 'close'
+    getStateString(
       date?: Date,
       past?: boolean
     ): 'open' | 'unknown' | 'closed' | 'close'
@@ -28,7 +36,7 @@ declare module 'opening_hours' {
       start_date?: Date
     ): boolean
     isWeekStable(): boolean
-    prettifyValue(argument_hash?: argument_hash): string
+    prettifyValue(argument_hash?: Partial<argument_hash>): string
     getIterator(date?: Date): opening_hours_iterator
   }
   export default opening_hours
@@ -38,6 +46,14 @@ declare module 'opening_hours' {
     setDate(date: Date): void
     getState(date?: Date): boolean
     getUnknown(date?: Date): boolean
+    getStateString(
+      date: Date | undefined,
+      past: true
+    ): 'open' | 'unknown' | 'closed'
+    getStateString(
+      date?: Date,
+      past?: false
+    ): 'open' | 'unknown' | 'close'
     getStateString(
       date?: Date,
       past?: boolean
@@ -57,7 +73,7 @@ declare module 'opening_hours' {
   }
 
   export interface argument_hash {
-    rule_index: 'number' | undefined
+    rule_index: number | undefined
     zero_pad_hour: boolean
     one_zero_if_hour_zero: boolean
     leave_off_closed: boolean
@@ -84,7 +100,7 @@ declare module 'opening_hours' {
   }
 
   export interface optional_conf {
-    mode: mode
+    mode: mode | undefined
     tag_key: string | undefined
     map_value: boolean | undefined
     warnings_severity: warnings_severity | undefined

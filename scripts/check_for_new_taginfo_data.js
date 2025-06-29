@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// SPDX-FileCopyrightText: © 2014 Robin Schneider <ypid@riseup.net>
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
 /* Constant variables {{{ */
 var taginfo_api_base_url = 'https://taginfo.openstreetmap.org/api/4/';
 var exit_code_new = 0;
@@ -30,8 +34,8 @@ if (typeof argv.E === 'number') {
 /* }}} */
 
 /* Required modules {{{ */
-var https = require('https');
-var fs   = require('fs');
+var https = require('node:https');
+var fs   = require('node:fs');
 /* }}} */
 
 /* Helper functions {{{ */

@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// SPDX-FileCopyrightText: © 2013 Robin Schneider <ypid@riseup.net>
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
 var optimist = require('optimist')
     .usage('Usage: $0 [optional parameters] [server_listening_ports]')
     .describe('h', 'Display the usage')
@@ -26,8 +30,8 @@ if (argv.help) {
 }
 
 var opening_hours = require('./' + argv['library-file']);
-var readline      = require('readline');
-var net           = require('net');
+var readline      = require('node:readline');
+var net           = require('node:net');
 
 // used for sunrise, sunset and PH,SH
 // https://nominatim.openstreetmap.org/reverse?format=json&lat=49.5487429714954&lon=9.81602098644987&zoom=18&addressdetails=1

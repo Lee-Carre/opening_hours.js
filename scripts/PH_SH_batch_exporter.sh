@@ -1,6 +1,6 @@
 #!/bin/bash
 ## @license AGPLv3 <https://www.gnu.org/licenses/agpl-3.0.html>
-## @author Copyright (C) 2015-2017 Robin Schneider <ypid@riseup.net>
+## @author Copyright (C) 2015 Robin Schneider <ypid@riseup.net>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU Affero General Public License as
@@ -17,7 +17,7 @@
 
 ## Script for generating PH/SH files for https://github.com/anschuetz/linuxmuster
 
-script_url="https://github.com/opening-hours/opening_hours.js/blob/master/PH_SH_batch_exporter.sh"
+script_url="https://github.com/opening-hours/opening_hours.js/blob/main/PH_SH_batch_exporter.sh"
 
 print_header()
 {

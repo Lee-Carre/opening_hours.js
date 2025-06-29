@@ -51,6 +51,8 @@ de:
       public holiday: >-
         Es wurde keine Regel für "PH" (feiertags) angegeben.
         Dies ist nicht sehr aussagekräftig.{{-part2}} Bitte füge die Regel "PH off" an, wenn die Einrichtung an allen Feiertagen geschlossen ist oder schreibe "Sa,Su,PH 12:00-16:00" um auszudrücken, dass Samstags, Sonntags und feiertags von 12:00-16:00 geöffnet ist.
+        Bei einer Öffnungszeit wie "Fr-Sa 18:00-06:00" ist Vorsicht geboten, da "PH off" auf 00:00-24:00 zutrifft.
+        Hier kann "Fr-Sa 18:00-06:00; PH 18:00-06:00 off" verwendet werden.
         Falls die Einrichtung täglich und an Feiertagen geöffnet ist, kann dies explizit mittels "Mo-Su,PH" ausgedrückt werden.
         Wenn du dir im Unklaren bist, versuche die Öffnungszeit zu klären.
         Falls das nicht möglich ist, lass die Angabe weg und ignoriere diese Warnung.
@@ -169,13 +171,13 @@ fi:
 fr:
   opening_hours:
     texts:
-      'assuming ok for ko': 'S''il vous plaît utiliser "<ok>" pour "<ko>".'
-      'please use ok for ko': 'S''il vous plaît utiliser "{{-ok}}" pour "{{ko}}".'
-      'please use English abbreviation ok for ko': 'S''il vous plaît utiliser l''abréviation "{{-ok}}" pour "{{ko}}".'
+      'assuming ok for ko': 'suppose "{{ok}}" pour "{{ko}}".'
+      'please use ok for ko': 'S''il vous plaît utilisez "{{ok}}" pour "{{ko}}".'
+      'please use English abbreviation ok for ko': 'S''il vous plaît utiliseé l''abréviation "{{ok}}" pour "{{ko}}".'
     pretty:
       'off': "fermé"
       SH: "vacances scolaires"
-      PH: "vacances publiques"
+      PH: "jours fériés"
 nl:
   opening_hours:
     texts:
@@ -190,3 +192,10 @@ ru:
       'off': "закрыто"
       SH: "каникулы"
       PH: "праздник"
+
+it:
+  opening_hours:
+    pretty:
+      'off': "chiuso"
+      SH: "festività scolastiche"
+      PH: "festività"

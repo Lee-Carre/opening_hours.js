@@ -1,4 +1,4 @@
-.. SPDX-FileCopyrightText: 2016-2021 Robin Schneider <ypid@riseup.net>
+.. SPDX-FileCopyrightText: © 2016 Robin Schneider <ypid@riseup.net>
 ..
 .. SPDX-License-Identifier: LGPL-3.0-only
 
@@ -7,8 +7,8 @@ Changelog
 
 All notable changes to opening_hours.js will be documented in this file.
 
-This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`__
-and `human-readable changelog <http://keepachangelog.com/en/0.3.0/>`__.
+This project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`__
+and `human-readable changelog <https://keepachangelog.com/en/0.3.0/>`__.
 
 Note that most of the v2.X.Z releases have not been added to the changelog yet.
 
@@ -161,12 +161,100 @@ Thanks for helping by allowing employees to work on the project during work hour
 .. _iMi digital: https://www.imi-digital.de/
 .. _AddisMap: https://www.addismap.com/
 
-master_ - unreleased
+main_ - unreleased
 --------------------
 
-.. _master: https://github.com/opening-hours/opening_hours.js/compare/v3.7.0...master
+.. _main: https://github.com/opening-hours/opening_hours.js/compare/v3.9.0...main
 
-`v3.8.0 milestone <https://github.com/opening-hours/opening_hours.js/issues?q=milestone%3Av3.8.0+is%3Aclosed>`__
+Changed
+~~~~~~~
+
+* chore: change default git branch from `master` to `main`
+* chore: remove `bower.json`
+* docs: move Contributing section from README to CONTRIBUTING file and add "Branching Model" section
+
+Added
+~~~~~
+
+* feat: script to update German school holidays [scripts/update_german_sh.mjs](scripts/update_german_sh.mjs) (#492)
+
+v3.9.0_ - 2025-05-31
+--------------------
+
+.. _v3.9.0: https://github.com/opening-hours/opening_hours.js/compare/v3.8.0...v3.9.0
+
+`v3.9.0 milestone <https://github.com/opening-hours/opening_hours.js/issues?q=milestone%3Av3.9.0+is%3Aclosed>`__
+
+Added
+~~~~~
+
+* Public holiday definitions added:
+
+  * Chinese (#406)
+  * Croatian
+  * Luxembourg (#460)
+  * Namibian (#452)
+
+* School holiday definitions added:
+
+  * Croatian
+  * France
+  * Luxembourg (#460)
+
+Changed
+~~~~~~~
+
+* Public holiday definitions updated:
+
+  * Argentina (#456)
+  * Swedish and Finnish (#465)
+
+* School holiday definitions updated:
+
+  * Belgium (#457)
+  * German (#468)
+  * Hungarian (#466)
+
+* [Evaluation tool] Optimize "Error and warning messages" layout
+* [chore] Update CI in `ci.yml` (#468)
+  * Replace deprecated `set-output`
+  * Test with maintained node versions
+  * Update actions
+* [chore] Upgrade `colors`, `husky` and `eslint` (#468)
+* [chore] Update dependencies (#468)
+* [chore] Move minification into rollup and remove `esbuild` (#468)
+* [chore] Also build sourcemap to minified files (#468)
+* [chore] Add code-style-check to CI (#468)
+* [chore] Change benchmark script to esm (#468)
+* [ci] switch to LTS Node.js version for code style check in workflow (#488)
+* [ci] update supported Node.js versions in CI workflow (#488)
+
+Fixed
+~~~~~
+
+* JOSM remote control was not working because it was trying to be accessed as https://localhost:8111/. Switch to HTTP.
+* [Evaluation tool] Fix timebar wrap on certain zoom levels in Firefox (issue #419)
+* [Evaluation tool] Fix Russian and Ukrainian pluralization by updating `i18next` and using API version V4 (#468)
+* [chore] Drop `yamlToJson.mjs` (#468) - There are better tools like https://mikefarah.gitbook.io/yq that do this. No need to maintain our own.
+* [chore] Fix `make list` (#468)
+
+v3.8.0_ - 2022-05-18
+--------------------
+
+.. _v3.8.0: https://github.com/opening-hours/opening_hours.js/compare/v3.7.0...v3.8.0
+
+Added
+~~~~~
+
+* Public holiday definitions added:
+
+  * Argentina
+  * Japanese
+
+* Localizations added:
+
+  * Vietnamese
+  * Japanese
 
 Changed
 ~~~~~~~
@@ -176,9 +264,11 @@ Changed
   * Romania
   * France
 
-* Localizations added:
+Fixed
+~~~~~
 
-  * Vietnamese
+* Typing for typescript
+
 
 v3.7.0_ - 2021-07-24
 --------------------
@@ -237,7 +327,7 @@ Added
   * Misused ``.`` character. Example: ``Jan 01,Dec 24.-25.``. [ypid_]
   * Trailing ``,`` after time selector. Example: ``We 12:00-18:00,``. [ypid_]
   * Additional rule which evaluates to closed. Example: ``Mo-Fr 10:00-20:00, We off``. [ypid_]
-  * Value consists of multiple rules each only using a time selector. Example: ``11:30-14:30;17:30-23:00``. [ypid]
+  * Value consists of multiple rules each only using a time selector. Example: ``11:30-14:30;17:30-23:00``. [ypid_]
   * Potentially missing use of ``<additional_rule_separator>`` if the previous
     rule has a time range which wraps over midnight and the current rule
     matches one of the following days of the previous rule.
@@ -293,8 +383,8 @@ Changed
 * Change directory layout of the project. [napei_, ypid_]
 * Switch from i18next-client to i18next dependency (no longer as peer dependency). [fodor0205_, ypid_]
 
-.. _ES2015 modules: http://exploringjs.com/es6/ch_modules.html
-.. _rollup: http://rollupjs.org/
+.. _ES2015 modules: https://exploringjs.com/es6/ch_modules.html
+.. _rollup: https://rollupjs.org/
 
 Fixed
 ~~~~~

@@ -1,3 +1,38 @@
+/*
+ * SPDX-FileCopyrightText: © 2013 Robin Schneider <ypid@riseup.net>
+ * SPDX-FileCopyrightText: © 2016 Michael Knight <https://github.com/dex2000>
+ * SPDX-FileCopyrightText: © 2020 Kristjan ESPERANTO <https://github.com/KristjanESPERANTO>
+ *
+ * SPDX-License-Identifier: LGPL-3.0-only
+ *
+ * This file is based on work under the following copyright and
+ * BSD-2-Clause permission notice:
+ *
+ *     SPDX-FileCopyrightText: © 2012 Dmitry Marakasov <amdmi3@amdmi3.ru>
+ *     All rights reserved.
+ *
+ *     Redistribution and use in source and binary forms, with or without
+ *     modification, are permitted provided that the following conditions are met:
+ *
+ *     1. Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *
+ *     2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *
+ *     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *     ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ *     FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *     DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *     SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 body { font-family: sans-serif }
 
 .permalink {
@@ -12,9 +47,10 @@ p.value_explanation {
     padding: 6px 10px;
     border-radius: 5px;
 }
-/* See http://clrs.cc/ */
-.error       { background: #ff851b } /* Orange */
-.warning     { background: #ffdc00 } /* Yellow */
+/* See https://clrs.cc/ */
+.error       { background: #ff851b; padding: 3px; } /* Orange */
+.warning     { background: #ffdc00; padding: 3px; } /* Yellow */
+div.warning_error_message { margin: 5px 0 0 0; padding: 5px; background-color : white; opacity: 0.8; font-family: monospace;}
 span.year    { background: #ff851b } /* Orange */
 span.week    { background: #ffdc00 } /* Yellow */
 span.month   { background: #88ff88 }

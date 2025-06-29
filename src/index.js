@@ -1,7 +1,35 @@
-/* jshint laxbreak: true */
-/* jshint boss: true */
-/* jshint loopfunc: true */
-
+/*
+ * SPDX-FileCopyrightText: © 2013 Robin Schneider <ypid@riseup.net>
+ *
+ * SPDX-License-Identifier: LGPL-3.0-only
+ *
+ * This file is based on work under the following copyright and
+ * BSD-2-Clause permission notice:
+ *
+ *     SPDX-FileCopyrightText: © 2012 Dmitry Marakasov <amdmi3@amdmi3.ru>
+ *     All rights reserved.
+ *
+ *     Redistribution and use in source and binary forms, with or without
+ *     modification, are permitted provided that the following conditions are met:
+ *
+ *     1. Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *
+ *     2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *
+ *     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *     ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ *     FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *     DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *     SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 import * as holiday_definitions from './holidays/index';
 import word_error_correction from './locales/word_error_correction.yaml';
 import lang from './locales/lang.yaml';
@@ -2679,6 +2707,54 @@ export default function(value, nominatim_object, optional_conf_parm) {
         var canadaDay = july_1.getDay() === 0 ? 2 : 1;
         /* }}} */
 
+        /* Calculation of the spring and autumnal equinoxes (for Public holidays in Japan). {{{ */
+        function springEquinoxCalc(year){
+            if(year >= 1900 && year <= 1923){
+                if(year % 4 === 3) return new Date(year, 2, 22)
+                else return new Date(year, 2, 21)
+            } else if(year >= 1924 && year <= 1959){
+                return new Date(year, 2, 21)
+            } else if(year >= 1960 && year <= 1991){
+                if(year % 4 === 0) return new Date(year, 2, 20)
+                else return new Date(year, 2, 21)
+            } else if(year >= 1992 && year <= 2023){
+                if(year % 4 === 0 || year % 4 === 1) return new Date(year, 2, 20)
+                else return new Date(year, 2, 21)
+            } else if(year >= 2024 && year <= 2055){
+                if(year % 4 === 3) return new Date(year, 2, 21)
+                else return new Date(year, 2, 20)
+            } else if(year >= 2056 && year <= 2091){
+                return new Date(year, 2, 20)
+            } else if(year >= 2092 && year <= 2099){
+                if(year % 4 === 0) return new Date(year, 2, 19)
+                else return new Date(year, 2, 20)
+            }
+        }
+
+        function autumnalEquinoxCalc(year){
+            if(year >= 1900 && year <= 1919){
+                if(year % 4 === 0) return new Date(year, 8, 23)
+                else return new Date(year, 8, 24)
+            } else if(year >= 1920 && year <= 1947){
+                if(year % 4 === 0 || year % 4 === 1) return new Date(year, 8, 23)
+                else return new Date(year, 8, 24)
+            } else if(year >= 1948 && year <= 1979){
+                if(year % 4 === 3) return new Date(year, 8, 24)
+                else return new Date(year, 8, 23)
+            } else if(year >= 1980 && year <= 2011){
+                return new Date(year, 8, 23)
+            } else if(year >= 2012 && year <= 2043){
+                if(year % 4 === 0) return new Date(year, 8, 22)
+                else return new Date(year, 8, 23)
+            }  else if(year >= 2044 && year <= 2075){
+                if(year % 4 === 0 || year % 4 === 1) return new Date(year, 8, 22)
+                else return new Date(year, 8, 23)
+            } else if(year >= 2076 && year <= 2099){
+                if(year % 4 === 3) return new Date(year, 8, 23)
+                else return new Date(year, 8, 22)
+            }
+        }
+
         /* Helper functions {{{ */
         function firstWeekdayOfMonth(month, weekday){
             var first = new Date(year, month, 1);
@@ -2766,6 +2842,8 @@ export default function(value, nominatim_object, optional_conf_parm) {
             'nextMo-Sa01May'        : getDateOfNextWeekdayRange(1, 6, new Date(year, 4, 1)),
             'nextMo-Sa07August'     : getDateOfNextWeekdayRange(1, 6, new Date(year, 7, 7)),
             'nextMo-Sa25December'   : getDateOfNextWeekdayRange(1, 6, new Date(year, 11, 25)),
+            'springEquinox'         : springEquinoxCalc(year),
+            'autumnalEquinox'       : autumnalEquinoxCalc(year),
         };
     }
     /* }}} */

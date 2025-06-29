@@ -1,3 +1,5 @@
+/* global $, , default_lat, default_lon, i18next, jQuery, mapCountryToLanguage, opening_hours, OpeningHoursTable, specification_url, YoHoursChecker */
+
 /* Constants {{{ */
 var nominatim_api_url = 'https://nominatim.openstreetmap.org/reverse';
 // var nominatim_api_url = 'https://open.mapquestapi.com/nominatim/v1/reverse.php';
@@ -15,7 +17,7 @@ var evaluation_tool_colors = {
 // FIXME: Warning in console. Encoding stuff.
 function josm(url_param) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://localhost:8111/' + url_param, true);      // true makes this call asynchronous
+    xhr.open('GET', 'http://localhost:8111/' + url_param, true);      // true makes this call asynchronous
     xhr.onreadystatechange = function () {    // need eventhandler since our call is async
         if ( xhr.status !== 200 ) {
             alert(i18next.t('texts.JOSM remote conn error'));
@@ -189,9 +191,10 @@ function Evaluate (offset, reset) {
         var it = oh.getIterator(date);
     } catch (err) {
         crashed = err;
-        show_warnings_or_errors.innerHTML = '<p class="error">' + i18next.t('texts.filter.error') + ':<br />'
-            + '<textarea rows="' + crashed.split('\n').length + 1 + '" style="width: 100%" name="WarnErrors" readonly="readonly">' + crashed
-            + '</textarea></p>';
+        show_warnings_or_errors.innerHTML = `
+            <div class="error"> ${i18next.t('texts.filter.error')}
+                <div class="warning_error_message"> ${crashed} </div>
+            </div>`;
         show_time_table.innerHTML = '';
         show_results.innerHTML    = '';
     }
@@ -268,7 +271,7 @@ function Evaluate (offset, reset) {
         }
         value_explanation += '</p></div>';
         if (YoHoursChecker.canRead(value)) {
-            value_explanation = i18next.t('texts.refer to yohours', { href: 'http://github.pavie.info/yohours/?oh=' + value })
+            value_explanation = i18next.t('texts.refer to yohours', { href: 'https://projets.pavie.info/yohours/?oh=' + value })
             + '<br>'
             + value_explanation;
         }
@@ -331,15 +334,18 @@ function Evaluate (offset, reset) {
 
         var warnings = oh.getWarnings();
         if (warnings.length > 0) {
-            show_warnings_or_errors.innerHTML += '<p class="warning">' + i18next.t('texts.filter.error') + ':<br />'
-                + '<textarea rows="' + (warnings.length + 1)
-                + '" style="width: 100%" name="WarnErrors" readonly="readonly">' + warnings.join('\n')
-                + '</textarea></p>';
+            show_warnings_or_errors.innerHTML += `
+            <div class="warning"> ${i18next.t('texts.filter.error')}
+                <div class="warning_error_message"> ${warnings.join('\n')} </div>
+            </div>`;
         }
 
         if (prettified.length > 255) {
-            show_warnings_or_errors.innerHTML += '<p>' + i18next.t('texts.value to long for osm',
-                { pretLength: prettified.length, valLength: value.length, maxLength: 255 }) + '</p>';
+            show_warnings_or_errors.innerHTML += `
+            <div class="warning"> ${i18next.t('texts.filter.error')}
+                <div class="warning_error_message"> ${i18next.t('texts.value to long for osm',
+                    { pretLength: prettified.length, valLength: value.length, maxLength: 255 })} </div>
+            </div>`;
         }
 
         show_time_table.innerHTML += OpeningHoursTable.drawTableAndComments(oh, it);

@@ -1,13 +1,12 @@
 <!--
-SPDX-FileCopyrightText: 2012-2013 Dmitry Marakasov
-SPDX-FileCopyrightText: 2013-2021 Robin Schneider <ypid@riseup.net>
+SPDX-FileCopyrightText: © 2013 Robin Schneider <ypid@riseup.net>
 
 SPDX-License-Identifier: LGPL-3.0-only
 
-This file is based on work under the following copyright and permission
-notice:
+This file is based on work under the following copyright and BSD-2-Clause
+permission notice:
 
-    Copyright (c) 2012-2013 Dmitry Marakasov
+    SPDX-FileCopyrightText: © 2012 Dmitry Marakasov <amdmi3@amdmi3.ru>
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -177,7 +176,7 @@ yarn add opening_hours
 
 The version number consists of a major release, minor release and patch level (separated by a dot).
 
-For version 2.2.0 and all later, [Semantic Versioning](http://semver.org/spec/v2.0.0.html) is used:
+For version 2.2.0 and all later, [Semantic Versioning](https://semver.org/spec/v2.0.0.html) is used:
 
 - The major release is only increased if the release breaks backward compatibility.
 - The minor release is increased if new features are added.
@@ -531,9 +530,9 @@ Almost everything from opening_hours definition is supported, as well as some ex
 
 - Supports 24/7 keyword (`24/7`, which means always open. Use [state keywords][ohlib.states] to express always closed.)
 
-  - **WARN:** 24/7 is handled as a synonym for `00:00-24:00`, so `Mo-Fr 24/7` (though not really correct, because of that you should avoid it or replace it with "open". A warning will be given if you use it anyway for that purpose) will be handled correctly
+  - **WARN:** 24/7 is handled as a synonym for `00:00-24:00`, so it can be misused like `Mo-Fr 24/7` and still interpreted (but it is not really correct, you should avoid it or replace it with "open". A warning will be given if you use it anyway for that purpose)
 
-    *The use of 24/7 as synonym is never needed and should be avoided in cases where it does not mean 24/7.* In cases where a facility is really open 24 hours 7 days a week thats where this value is for.
+    *The use of 24/7 in such way is never needed, you should use `24/7` only when it applies to the entire week.* In cases where a facility is really open 24 hours 7 days a week thats where this value is for.
 
 - **WARN:** Supports omitting time range (`Mo-Fr; Tu off`)
 
@@ -577,31 +576,42 @@ Almost everything from opening_hours definition is supported, as well as some ex
 
   - Countries with PH definition:
 
+    - [Argentina][ph-ar]
     - [Australia][ph-au]
     - [Austria][ph-at] ([footnotes][ph-at] are ignored)
     - [Belgium][ph-be] (See [issue #115](https://github.com/opening-hours/opening_hours.js/issues/115) for details)
     - [Brazil][ph-br]
     - [Canada][ph-ca]
+    - China (Only fixed-date holidays. See https://github.com/opening-hours/opening_hours.js/issues/408)
+    - [Croatia][ph-hr]
     - [Czech Republic][ph-cz]
     - [Denmark][ph-dk]
     - [England and Wales][ph-gb]
     - [France][ph-fr]
+    - Finland
     - [Germany][ph-de] ([footnotes][ph-de] are ignored)
+    - Greece
     - [Hungary][ph-hu]
     - [Ireland][ph-ie]
     - [Italy][ph-it] (Without the Saint Patron day, see [comment](https://github.com/opening-hours/opening_hours.js/pull/74#issuecomment-76194891))
     - [Ivory Coast][ph-ci] (Without the four islamic holidays because they can not be calculated and depend on subjective ad-hoc definition)
+    - Japan
+    - Luxembourg
+    - Namibia
     - [Netherlands][ph-ne]
     - [New Zealand][ph-nz] (Provincial holiday is not handled. See [PR #333](https://github.com/opening-hours/opening_hours.js/pull/333) for details.)
+    - Norway
     - [Poland][ph-nl]
     - [Romania][ph-ro]
     - [Russian][ph-ru]
-    - [Slovenian][ph-si]
+    - Slovakia
+    - [Slovenia][ph-si]
+    - Spain
     - [Sweden][ph-se]
     - [Switzerland][ph-ch]
     - [Ukraine][ph-ua]
     - [United states][ph-us] (Some special cases are [currently not handled](https://github.com/opening-hours/opening_hours.js/issues/69#issuecomment-74103181))
-    - [Vietnam][ph-vn] (Some public holidays cannot currently be calulated by the library and are missing. See https://github.com/opening-hours/opening_hours.js/pull/388)
+    - [Vietnam][ph-vn] (Lunar calendar-based public holidays cannot currently be calculated by the library and are missing. See https://github.com/opening-hours/opening_hours.js/pull/388)
 
   - **EXT:** Supports limited calculations based on public holidays (e.g. `Sa,PH -1 day open`). The only two possibilities are currently +1 and -1. All other cases are not handled. This seems to be enough because the only thing which is really used is -1.
 
@@ -609,10 +619,15 @@ Almost everything from opening_hours definition is supported, as well as some ex
 
   - Countries with SH definition:
 
-    - Germany, see [hc]
-    - Austria
-    - Romania
-    - Hungary
+    - Austria (national until 2024, regional until 2021)
+    - Belgium (good until 2026)
+    - Croatia (good until 2022&ndash;2023)
+    - France (good until 2025)
+    - Germany, see [hc] and [scripts/update_german_sh.mjs](scripts/update_german_sh.mjs) (good until 2026)
+    - Greece (good until 2020)
+    - Hungary (good until 2024&ndash;2025)
+    - Luxembourg (good until 2025&ndash;2026)
+    - Romania (good until 2021)
 
 - There can be two cases which need to be separated (this applies for PH and SH):
 
@@ -688,7 +703,7 @@ A node.js based test framework is bundled. You can run it with `node test/test.j
 
 Included in the `test` directory are the log outputs of the previous testing runs. By comparing to these logs and assuming that the checkedd-in logs are always passing, it allows the developer to validate if the number of passed tests have changed since the last feature implementation.
 
-The current results of this test are also tracked in the repository and can be viewed [here](/test.en.log). Note that this file uses [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) which can be interpreted by cat in the terminal. `make check` compares the test output with the output from the last commit and shows you a diff.
+The current results of this test are also tracked in the repository and can be viewed [here](test/test.en.log). Note that this file uses [ANSI escape code](https://en.wikipedia.org/wiki/ANSI_escape_code) which can be interpreted by cat in the terminal. `make check` compares the test output with the output from the last commit and shows you a diff.
 
 ### Testing with real data
 
@@ -720,7 +735,7 @@ Testing is much easier by now. Have a look at the [evaluation tool][ohlib.evalua
 
 ## Performance
 
-Simple node.js based benchmark is bundled. You can run it with `node ./scripts/benchmark.js` or with `make benchmark`.
+Simple node.js based benchmark is bundled. You can run it with `node ./scripts/benchmark.mjs` or with `make benchmark`.
 
 The library allows ~9k/sec constructor calls and ~9k/sec openIntervals() calls with one week period on author's Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz running NodeJS 7.7.1, Linux 4.4.38-11 virtualized under Xen/Qubes OS). This may further improve in the future.
 
@@ -737,7 +752,7 @@ This library is known to the used by the following projects:
 | [YoHours][]                                                      | A simple editor for OpenStreetMap opening hours, [GitHub](https://github.com/PanierAvide/panieravide.github.io/tree/master/yohours)                                                                                                                                 |
 | [opening_hours_server.js]                                        | A little server answering query‘s for opening_hours and check if they can be evaluated.                                                                                                                                                                             |
 | [opening_hours-statistics]                                       | Visualization of the data quality and growth over time in OSM.                                                                                                                                                                                                      |
-| [www.openstreetmap.hu](http://www.openstreetmap.hu/)             | old version of this library, see also <https://github.com/AMDmi3/opening_hours.js/issues/19>                                                                                                                                                                        |
+| [www.openstreetmap.hu](https://www.openstreetmap.hu/)            | old version of this library, see also <https://github.com/AMDmi3/opening_hours.js/issues/19>                                                                                                                                                                        |
 | [osmopeninghours][]                                              | JavaScript library which provides a more abstract, specialized API and Italian localization. It returns a JavaScript object for a given time interval (see [example.json](https://github.com/digitalxmobile-dev/osmopeninghours/blob/master/example/example.json)). |
 | [ComplexAlarm](https://github.com/ypid/ComplexAlarm)             | Java/Android. Using the JS implementation through [js-evaluator-for-android](https://github.com/evgenyneu/js-evaluator-for-android).                                                                                                                                |
 | [MapComplete](https://github.com/pietervdvn/MapComplete)         | An OpenStreetMap-editor which aims to be really simple to use by offering multiple themes                                                                                                                                                                           |
@@ -758,7 +773,7 @@ YoHours currently only checks with this lib if the opening_hours value can be ev
 [pyopening_hours]: https://github.com/ypid/pyopening_hours
 [opening_hours_server.js]: https://github.com/ypid/opening_hours_server.js
 [opening_hours-statistics]: https://github.com/ypid/opening_hours-statistics
-[yohours]: http://github.pavie.info/yohours/
+[yohours]: https://projets.pavie.info/yohours/
 [osmopeninghours]: https://github.com/digitalxmobile-dev/osmopeninghours
 
 ## Bindings and ports
@@ -804,77 +819,21 @@ List of features which can make writing easier:
 
 ## How to contribute
 
-You can contribute in the usual manner as known from git (and GitHub). Just fork, change and make a pull request.
+If you want to contribute to this project, please read the [contribution guidelines](CONTRIBUTING.md).
 
-### Translating the evaluation tool and the map
+## Maintainers
 
-This project uses <https://www.i18next.com/> for translation.
-
-Translations can be made in the file [js/i18n-resources.js][ohlib.js/i18n-resources.js]. Just copy the whole English block, change the language code to the one you are adding and make your translation. You can open the [index.html](/index.html) to see the result of your work. ~~To complete your localization add the translated language name to the other languages~~ (you don’t have to do this anymore. Importing that form somewhere, WIP, see gen_word_error_correction.js). Week and month names are translated by the browser using the `Date.toLocaleString` function.
-
-Note that this resource file does also provide the localization for the [opening_hours_map]. This can also be tested by cloning the project and linking your modified opening_hours.js working copy to the opening_hours.js directory (after renaming it) inside the opening_hours_map project. Or just follow the installation instructions from the [opening_hours_map].
-
-### Translating error messages and warnings
-
-Translations for error messages and warnings for the opening_hours.js library can be made in the file [locales/core.js][ohlib.js/locales/core.js]. You are encouraged to test your translations. Checkout the [Makefile][ohlib.makefile] and the [test framework][ohlib.test.js] for how this can be done.
-
-### Holiday Data
-
-Please do not open issues for missing holidays. It is obvious that there are more missing holidays then holidays which are defined in this library. Instead consider if you can add your missing holidays and send me a pull request or patch. If you are hitting a problem because some holidays depend on variable days or something like this, consider opening a unfinished PR so that the more complicated things can be discussed there.
-
-Holidays can be added to the file [index.js][ohlib.opening_hours.js]. Have a look at the current definitions for [other holidays][ohlib.holidays].
-
-Please refer to the [holiday documentation][ohlib.docs.holiday] for more details about the data format.
-
-Please consider adding a test (with a time range of one year for example) to see if everything works as expected and to ensure that it will stay that way.
-See under [testing][ohlib.testing].
-
-In case your holiday definition does only change the `holiday_definitions` variable (and not core code) it is also ok to test the definition using the `scripts/PH_SH_exporter.js` script. In that case writing a test is not required but still appreciated. Example: `./scripts/PH_SH_exporter.js --verbose --from=2016 --to=2016 --public-holidays --country dk --state dk /tmp/dk_holidays.txt`
-
-### Core code
-
-Be sure to add one or more tests if you add new features or enhance error tolerance or the like.
-See under [testing][ohlib.testing].
-
-#### Commit hooks
-
-Note that there is a git pre-commit hook used to run and compare the test framework before each commit. Hooks are written as shell scripts using [husky](https://github.com/typicode/husky) and should be installed to git automatically when running `npm install`. If this does not happen, you can manually run `npm run postinstall`.
-
-#### Documentation
-
-All functions are documented, which should help contributers to get started.
-
-The documentation looks like this:
-
-```js
-/* List parser for constrained weekdays in month range {{{
- * e.g. Su[-1] which selects the last Sunday of the month.
- *
- * :param tokens: List of token objects.
- * :param at: Position where to start.
- * :returns: Array:
- *            0. Constrained weekday number.
- *            1. Position at which the token does not belong to the list any more (after ']' token).
- */
-function getConstrainedWeekday(tokens, at) {}
-```
-
-The opening brackets `{{{` (and the corresponding closing onces) are used to fold the source code. See [Vim folds](http://vim.wikia.com/wiki/Folding).
-
-## Authors
-
-| Autor                                         | Contact            | Note                                                                                                                                                                                                                                                                                                                  |
-| --------------------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Dmitry Marakasov](https://github.com/AMDmi3) | <amdmi3@amdmi3.ru> | Initial coding and design and all basic features like time ranges, week ranges, month ranges and week ranges.                                                                                                                                                                                                         |
-| [Robin Schneider](https://me.ypid.de/)        | <ypid@riseup.net>  | Maintainer (since September 2013). Added support for years, holidays, unknown, comments, open end, fallback/additional rules (and more), wrote getWarnings, prettifyValue, translated demo page to English and German and extended it to enter values yourself (now called [evaluation tool][ohlib.evaluation-tool]). |
+* [Dmitry Marakasov](https://github.com/AMDmi3) <amdmi3@amdmi3.ru>: Maintainer from 2012-12 until 2014-05. Initial coding and design and all basic features like time ranges, week ranges, month ranges and week ranges.
+* [Robin Schneider](https://me.ypid.de/) <ypid@riseup.net>: Maintainer from 2013-09 until 2025-05. Added support for years, holidays, unknown, comments, open end, fallback/additional rules (and more), wrote getWarnings, prettifyValue, translated demo page to English and German and extended it to enter values yourself (now called [evaluation tool][ohlib.evaluation-tool]).
+* [Kristjan ESPERANTO](https://github.com/KristjanESPERANTO) [GitHub](https://github.com/KristjanESPERANTO)/[OSM](https://www.openstreetmap.org/user/Kristjan%20ESPERANTO): Maintainer since 2025-05. Switch from CommonJS to ESM. Sharpening the ESLint rules incl. handling the reported issues. HTML/CSS/JS/GitHub CI improvements, keeping the stack up-to-date.
 
 ## Contributors
 
-Refer to the [Changelog](https://github.com/opening-hours/opening_hours.js/blob/master/CHANGELOG.rst)
+Refer to the [Changelog](https://github.com/opening-hours/opening_hours.js/blob/main/CHANGELOG.rst)
 
 ## Credits
 
-- [Netzwolf](http://www.netzwolf.info/) (He developed the first and very feature complete JS implementation for opening_hours (time_domain.js, [mirror](https://openingh.ypid.de/netzwolf_mirror/)). His implementation did not create selector code to go through time as this library does (which is a more advanced design). time_domain.js has been withdrawn in favor of opening_hours.js but a few parts where reused (mainly the error tolerance and the online evaluation for the [evaluation tool][ohlib.evaluation-tool]). It was also very useful as prove and motivation that all those complex things used in the [opening_hours syntax][oh:specification] are possible to evaluate with software :) )
+- [Netzwolf](https://www.netzwolf.info/) (He developed the first and very feature complete JS implementation for opening_hours (time_domain.js, [mirror](https://openingh.ypid.de/netzwolf_mirror/)). His implementation did not create selector code to go through time as this library does (which is a more advanced design). time_domain.js has been withdrawn in favor of opening_hours.js but a few parts where reused (mainly the error tolerance and the online evaluation for the [evaluation tool][ohlib.evaluation-tool]). It was also very useful as prove and motivation that all those complex things used in the [opening_hours syntax][oh:specification] are possible to evaluate with software :) )
 - Also thanks to FOSSGIS for hosting a public instance of this service. See the [wiki][fossgis-project].
 - The [favicon.png](/img/favicon.png) is based on the file ic_action_add_alarm.png from the [Android Design Icons](https://developer.android.com/downloads/design/Android_Design_Icons_20131106.zip) which is licensed under [Creative Commons Attribution 2.5](https://creativecommons.org/licenses/by/2.5/). It represents a clock next to the most common opening_hours value (by far) which is `24/7` and a check mark.
 
@@ -887,6 +846,17 @@ Refer to the [Changelog](https://github.com/opening-hours/opening_hours.js/blob/
 As of version 3.4, opening_hours.js is licensed under the [GNU Lesser General Public License v3.0](<https://tldrlegal.com/license/gnu-lesser-general-public-license-v3-(lgpl-3)>) only.
 
 Note that the original work from Dmitry Marakasov is published under the BSD 2-clause "Simplified" (BSD-2-Clause) license which is included in this repository under the commit hash [b2e11df02c76338a3a32ec0d4e964330d48bdd2d](https://github.com/opening-hours/opening_hours.js/tree/b2e11df02c76338a3a32ec0d4e964330d48bdd2d).
+
+<https://reuse.software> is used. The year of initial publication is used and not updated. When you as new author make copyrightable changes, you are free of course to add a `SPDX-FileCopyrightText` line to the file(s) you changed with the year of the contribution. Please use a format like this:
+
+```
+SPDX-FileCopyrightText: © 2021 Humble Hacker <hh@example.org>
+```
+
+See also:
+
+- <https://reuse.software/faq/#years-copyright>
+- <https://matija.suklje.name/how-and-why-to-properly-write-copyright-statements-in-your-code#why-not-bump-the-year-on-change>
 
 <!-- Links {{{ -->
 
@@ -912,18 +882,14 @@ Edit: This does also work on npmjs in this short version … -->
 [ohlib.contribute.holidays]: /src/holidays/
 [ohlib.evaluation-tool]: #evaluation-tool
 [ohlib.library-api]: #library-api
-[ohlib.testing]: #testing
 [ohlib.docs.holiday]: /holidays/README.md
-[ohlib.js/locales/core.js]: /src/locales/core.js
-[ohlib.opening_hours.js]: /index.js
-[ohlib.test.js]: /test.js
 [ohlib.makefile]: /Makefile
-[ohlib.js/i18n-resources.js]: /site/js/i18n-resources.js
 [ohlib.npmjs]: https://www.npmjs.org/package/opening_hours
 [ohlib.github]: https://github.com/opening-hours/opening_hours.js
 [hc]: https://gitlab.com/ypid/hc
 [evaluation tool]: https://openingh.openstreetmap.de/evaluation_tool/
-[schulferien.org]: http://www.schulferien.org/iCal/
+[schulferien.org]: https://www.schulferien.org/deutschland/ical/
+[ph-ar]: https://en.wikipedia.org/wiki/Public_holidays_in_Argentina
 [ph-at]: https://de.wikipedia.org/wiki/Feiertage_in_%C3%96sterreich
 [ph-au]: https://en.wikipedia.org/wiki/Public_holidays_in_Australia
 [ph-be]: https://de.wikipedia.org/wiki/Feiertage_in_Belgien
@@ -934,11 +900,12 @@ Edit: This does also work on npmjs in this short version … -->
 [ph-cz]: https://en.wikipedia.org/wiki/Public_holidays_in_the_Czech_Republic
 [ph-de]: https://de.wikipedia.org/wiki/Feiertage_in_Deutschland
 [ph-dk]: https://en.wikipedia.org/wiki/Public_holidays_in_Denmark
-[ph-fr]: https://fr.wikipedia.org/wiki/F%EAtes_et_jours_f%E9ri%E9s_en_France
+[ph-fr]: https://fr.wikipedia.org/wiki/F%C3%AAtes_et_jours_f%C3%A9ri%C3%A9s_en_France
 [ph-gb]: https://www.gov.uk/bank-holidays#england-and-wales
+[ph-hr]: https://en.wikipedia.org/wiki/Public_holidays_in_Croatia
 [ph-hu]: https://en.wikipedia.org/wiki/Public_holidays_in_Hungary
 [ph-ie]: https://en.wikipedia.org/wiki/Public_holidays_in_the_Republic_of_Ireland
-[ph-it]: http://www.governo.it/Presidenza/ufficio_cerimoniale/cerimoniale/giornate.html
+[ph-it]: https://presidenza.governo.it/ufficio_cerimoniale/cerimoniale/giornate.html
 [ph-ne]: https://nl.wikipedia.org/wiki/Feestdagen_in_Nederland
 [ph-nl]: https://pl.wikipedia.org/wiki/Dni_wolne_od_pracy_w_Polsce
 [ph-nz]: https://en.wikipedia.org/wiki/Public_holidays_in_New_Zealand
